@@ -83,6 +83,11 @@ class UserInput(BaseModel):
     Forgetful: str
     Deprive_Sleep: str
 
+# Define root endpoint for health check
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the FastAPI app!"}
+
 # Define prediction endpoint
 @app.post("/predict")
 async def predict(user_input: UserInput):
@@ -98,5 +103,5 @@ async def predict(user_input: UserInput):
 # Run the FastAPI app with Uvicorn
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 8000))  # Get the port from the environment variable or use 8000
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="debug")
