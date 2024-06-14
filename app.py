@@ -1,4 +1,5 @@
 import json
+import os
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -57,15 +58,15 @@ origins = [
     "http://localhost:3002",
     "http://localhost:3003",
     "http://localhost:3004",
-    "https://smartphone-addiction-care.vercel.app/"
+    "https://smartphone-addiction-care.vercel.app"  # Your deployed frontend
 ]
 
 # Add CORS support to your FastAPI app with specific origins allowed
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allows all origins
+    allow_origins=origins,  # Allows specific origins
     allow_credentials=True,
-    allow_methods=["GET","POST"],  # Allows all methods
+    allow_methods=["GET", "POST"],  # Allows specified methods
     allow_headers=["*"],  # Allows all headers
 )
 
@@ -94,7 +95,8 @@ async def predict(user_input: UserInput):
     # Return the predicted nomophobia score as JSON response
     return JSONResponse(content={'nomophobia_score': nomophobia_score})
 
-# Run the Flask app
+# Run the FastAPI app with Uvicorn
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="https://smartphone-addiction-care.vercel.app/", port=8000, log_level="debug")
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="debug")
