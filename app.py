@@ -57,6 +57,7 @@ origins = [
     "http://localhost:3002",
     "http://localhost:3003",
     "http://localhost:3004",
+    "https://smartphone-addiction-care.vercel.app/"
 ]
 
 # Add CORS support to your FastAPI app with specific origins allowed
@@ -96,4 +97,4 @@ async def predict(user_input: UserInput):
 # Run the Flask app
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="debug")
+    uvicorn.run(app, host="https://smartphone-addiction-care.vercel.app/", port=8000, log_level="debug")
